@@ -17,12 +17,12 @@ def index(request):
         if imported_keys:
             objs = [Report(key=item) for item in imported_keys]
             Report.objects.bulk_create(objs)
-            return JsonResponse({ 'postkeys': imported_keys },safe=False)
+            return JsonResponse({ 'postkeys ': imported_keys }, safe=False, status = 201)
         return JsonResponse({ 'error': 'key not found in data' }, status=400)
 
     if request.method == 'GET':
         keys = Report.objects.values('key')
-        return JsonResponse({ 'getkeys': list(map(lambda x:x['key'], keys)) })
+        return JsonResponse({ 'getkeys ': list(map(lambda x:x['key'], keys)) })
 
     return JsonResponse({ 'error': 'method not supported' }, status=405)
 
